@@ -4,7 +4,6 @@
 #include <DallasTemperature.h>
 #include <SoftwareSerial.h>
 #include <OneWire.h>
-#include "Adafruit_MCP9808.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
