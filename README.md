@@ -22,7 +22,15 @@ I needed a way to monitor the temperature inside of my RV when WIFI was not avai
 
 1. Activate holoram.io sim (https://support.hologram.io/hc/en-us/articles/360035697873-How-do-I-activate-SIMs-)
 
-2. Follow the instruction for the Botletics sim7000a shield (https://github.com/botletics/SIM7000-LTE-Shield/wiki)
+2. Follow the instruction for the Botletics sim7000a shield and only proceed when you can confirm it's activated and functional using the provided example code. (https://github.com/botletics/SIM7000-LTE-Shield/wiki)
+
+3. Create a thingspeak account and then click the "Channels"->"My Channels"->"New Channel". Name Field 1 "temp" and then click save at the bottom. Next locate the API Keys button for step 5.
+
+4. Download files from this repo and move contents of the "libraries" folder to your Arduino IDE libraries folder.
+
+5. Open the .ino file and edit the line of code containing the thingspeak url. Replace the "XXXXXXXXXXXX" with your thingspeak "Write API Key"
+
+6. Enjoy!
 
 
 
