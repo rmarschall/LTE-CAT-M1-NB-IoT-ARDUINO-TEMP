@@ -10,3 +10,6 @@ A (very) simple Arduino project for uploading temperature data to thingspeak via
 3. https://www.amazon.com/dp/B07H3XKNLH?ref=ppx_yo2ov_dt_b_product_details&th=1
 4. https://www.amazon.com/dp/B07TS8LTH5?psc=1&ref=ppx_yo2ov_dt_b_product_details
 5. https://www.amazon.com/dp/B08V93CTM2?psc=1&ref=ppx_yo2ov_dt_b_product_details
+6. https://store.hologram.io/store/pilot-global-iot-sim-card/
+
+# Schematic
