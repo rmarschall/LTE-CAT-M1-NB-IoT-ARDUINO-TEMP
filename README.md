@@ -1,4 +1,4 @@
-# LTE-CAT-M1-NB-IoT-ARDUINO-TEMP-
+# LTE-CAT-M1-NB-IoT-ARDUINO-TEMP
 A (very) simple Arduino project for uploading temperature data to thingspeak via LTE CAT-M1/NB-IoT networks.
 
 
@@ -20,7 +20,11 @@ I needed a way to monitor the temperature inside of my RV when WIFI was not avai
 
 *I may make a more in-depth tutorial if needed in the future*
 
-1. Follow the instruction for the Botletics sim7000a shield (https://github.com/botletics/SIM7000-LTE-Shield/wiki)
+1. Activate holoram.io sim (https://support.hologram.io/hc/en-us/articles/360035697873-How-do-I-activate-SIMs-)
+
+2. Follow the instruction for the Botletics sim7000a shield (https://github.com/botletics/SIM7000-LTE-Shield/wiki)
+
+
 
 
 
