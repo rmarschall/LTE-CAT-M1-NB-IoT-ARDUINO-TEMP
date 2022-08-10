@@ -1,5 +1,5 @@
 # LTE-CAT-M1-NB-IoT-ARDUINO-TEMP-
-A (very) simple Arduino project for uploading temperature data to thingspeak via LTE CAT-M1/NB-IoT networks
+A (very) simple Arduino project for uploading temperature data to thingspeak via LTE CAT-M1/NB-IoT networks.
 
 
 
@@ -12,4 +12,15 @@ A (very) simple Arduino project for uploading temperature data to thingspeak via
 5. https://www.amazon.com/dp/B08V93CTM2?psc=1&ref=ppx_yo2ov_dt_b_product_details
 6. https://store.hologram.io/store/pilot-global-iot-sim-card/
 
-# Schematic
+# Introduction
+
+I needed a way to monitor the temperature inside of my RV when WIFI was not available to make sure my pets were safe. A similar device is available on the market, but the monthly fees and lack of expandability made me question whether or not it was worth it. I decided to do my research on data plans and settletd on on the Hologram iot platform. They offer a 1MB/month pilot program for free and they have access to most major carriers(worldwide!). 1MB doesn’t sound like much, but each update pushed to thingspeak(the website we're using to relay the data) is averaging around 1.4kb, so theoretically you can expect around 714 updates per month for free! If you would like to recieve texts its a base fee of a dollar a month and $0.19 per outhgoing text. The hardware I used is listed above and came to a rough total of about $140.
+
+# Tutorial 
+
+*I may make a more in-depth tutorial if needed in the future*
+
+1. Follow the instruction for the Botletics sim7000a shield (https://github.com/botletics/SIM7000-LTE-Shield/wiki)
+
+
+
