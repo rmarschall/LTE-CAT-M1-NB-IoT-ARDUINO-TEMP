@@ -1,4 +1,4 @@
-#include "Adafruit_FONA.h"
+#include "BotleticsSIM7000.h"
 #include <SPI.h>
 #include <LiquidCrystal.h>
 #include <DallasTemperature.h>
@@ -15,15 +15,15 @@ const int colorG = 0;
 const int colorB = 0;
 
 //Set temperature update frequency(in minutes)
-const int interval_time = 1;
+const int interval_time = 5;
 
 DFRobot_RGBLCD1602 lcd(/*lcdCols*/16,/*lcdRows*/2);  //16 characters and 2 lines of show
 
 #define SIMCOM_7000
-#define FONA_PWRKEY 6
-#define FONA_RST 7
-#define FONA_TX 10
-#define FONA_RX 11
+#define PWRKEY 6
+#define RST 7
+#define TX 10
+#define RX 11
 #define MODEM_RST 5
 
 #define ONE_WIRE_BUS 0
@@ -34,15 +34,15 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
 
-SoftwareSerial fonaSS = SoftwareSerial(FONA_TX, FONA_RX);
+SoftwareSerial modemSS = SoftwareSerial(TX, RX);
 
-SoftwareSerial *fonaSerial = &fonaSS;
+SoftwareSerial *modemSerial = &modemSS;
 
-Adafruit_FONA_LTE fona = Adafruit_FONA_LTE();
+Botletics_modem_LTE modem = Botletics_modem_LTE();
 
 
 
-//FONA hardware reset function
+//MODEM hardware reset function
 void modem_reset() {
   Serial.println("\nModem hardware reset\n");
   pinMode(MODEM_RST, OUTPUT);
@@ -52,9 +52,9 @@ void modem_reset() {
   delay(10000); //Modem takes longer to get ready and reply after this kind of reset vs power on
 }
 
-//FONA Signal strength display function
+//MODEM Signal strength display function
 void signalStrength() {
-  uint8_t n = fona.getRSSI();
+  uint8_t n = modem.getRSSI();
   int8_t r;
 
   lcd.print(F("RSSI = ")); 
@@ -87,35 +87,35 @@ void setup() {
 
   delay(5000);
 
-  pinMode(FONA_RST, OUTPUT);
-  digitalWrite(FONA_RST, HIGH); // Default state
+  pinMode(RST, OUTPUT);
+  digitalWrite(RST, HIGH); // Default state
 
-  pinMode(FONA_PWRKEY, OUTPUT);
+  pinMode(PWRKEY, OUTPUT);
 
   // Turn on the module by pulsing PWRKEY low for a little bit
   // This amount of time depends on the specific module that's used
-  fona.powerOn(FONA_PWRKEY); // Power on the module
+  modem.powerOn(PWRKEY); // Power on the module
   lcd.clear();
   Serial.begin(9600);
-  Serial.println(F("FONA basic test"));
+  Serial.println(F("MODEM basic test"));
   Serial.println(F("Initializing....(May take several seconds)"));
   lcd.print("Initializing....");
 
   // Software serial:
-  fonaSS.begin(115200); // Default SIM7000 shield baud rate
+  modemSS.begin(115200); // Default SIM7000 shield baud rate
 
   Serial.println(F("Configuring to 9600 baud"));
   
-  fonaSS.println("AT+IPR=9600"); // Set baud rate
+  modemSS.println("AT+IPR=9600"); // Set baud rate
   delay(100); // Short pause to let the command run
-  fonaSS.begin(9600);
+  modemSS.begin(9600);
   
 
-  //Fona board check 
-  if (! fona.begin(fonaSS)) {
-    Serial.println(F("Couldn't find FONA"));
-    lcd.print("Couldn't find FONA");
-    digitalWrite(FONA_PWRKEY, HIGH);
+  //MODEM board check 
+  if (! modem.begin(modemSS)) {
+    Serial.println(F("Couldn't find MODEM"));
+    lcd.print("Couldn't find MODEM");
+    digitalWrite(PWRKEY, HIGH);
     modem_reset();
   }
   else{
@@ -126,9 +126,9 @@ void setup() {
   lcd.clear();
 
   // AT+CFUN=1
-  fona.setFunctionality(1);
+  modem.setFunctionality(1);
 
-  fona.setNetworkSettings(F("hologram"));
+  modem.setNetworkSettings(F("hologram"));
   delay(10000);
   Serial.println(F("startup complete"));
 
@@ -138,8 +138,8 @@ void setup() {
   
   lcd.clear();
 
-  //Fona enable data
-  if (!fona.enableGPRS(true)){
+  //MODEM enable data
+  if (!modem.enableGPRS(true)){
     Serial.println(F("Failed to turn on"));
     lcd.print("FAILED TO CONNECT!");
     delay(5000);
@@ -185,8 +185,8 @@ void loop() {
   
   signalStrength();
   
-  if (! fona.begin(fonaSS)) {
-    Serial.println(F("Couldn't find FONA"));
+  if (! modem.begin(modemSS)) {
+    Serial.println(F("Couldn't find MODEM"));
     //modem_reset();
     setup();
   }
@@ -198,8 +198,8 @@ void loop() {
   
   lcd.clear();
 
-  if(fona.enableGPRS(true) == false){
-    fona.enableGPRS(true);
+  if(modem.enableGPRS(true) == false){
+    modem.enableGPRS(true);
   }
 
    delay(2000);
@@ -214,16 +214,16 @@ void loop() {
 
    Serial.println(url);
    
-   fona.HTTP_GET_start(url, &statuscode, (uint16_t *)&length);
+   modem.HTTP_GET_start(url, &statuscode, (uint16_t *)&length);
     lcd.print("Update pushed!");
     lcd.setCursor(0,1);
     lcd.print("via LTE@");
     lcd.print(interval_time);
     lcd.print("m int");
  
-   fona.HTTP_GET_end();
+   modem.HTTP_GET_end();
    
-   fona.enableGPRS(false); 
+   modem.enableGPRS(false); 
   delay(60000*interval_time);
 
 }
